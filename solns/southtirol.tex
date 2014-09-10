@@ -47,7 +47,7 @@
 
 \medskip
 \small
-\centerline{\emph{These are brief solutions to some notes available at a small town in the Schnalstal valley.}}
+\centerline{\emph{These are reasonably complete solutions to some notes available at a small town in the Schnalstal valley.}}
 \normalsize
 
 \bigskip\bigskip
@@ -96,30 +96,53 @@ which goes backward in time from $t=0$ to $t=-0.020$, produces an obviously nons
 \prob{5}  Rewriting (35) for $T_j^{n+1}$ gives
     $$T_j^{n+1} \stackrel{\ast}{=} T_j^n + \mu T_{j+1}^{n+1} - 2 \mu T_j^{n+1} + \mu T_{j-1}^{n+1}$$
 or
-    $$(1 - 2\mu) T_j^{n+1} = T_j^n + \mu T_{j+1}^{n+1} + \mu T_{j-1}^{n+1}$$
-or
     $$T_j^{n+1} = \frac{1}{1 - 2\mu} T_j^n + \frac{\mu}{1 - 2\mu} T_{j+1}^{n+1} + \frac{\mu}{1 - 2\mu} T_{j-1}^{n+1}.$$
-
 In the last form we have written $T_j^{n+1}$ as an average of neighboring points.  That is, the coefficients are positive and add to one.  This allows a ``maximum principle'' proof of unconditional convergence, and thus unconditional stability; see reference [37] (= Morton \& Mayers).
 
-An alternative proof of unconditional stability is via a von Neumann-Fourier argument, also in [37].  Specifically, we look at the evolution of waves on the space-time grid:
+An alternative proof of unconditional stability is via a von Neumann-Fourier argument [37].  For such an argument we look at the evolution of waves on the space-time grid:
     $$T_j^n \stackrel{\dagger}{=} \lambda^n e^{i\omega (j\Delta x)}.$$
-We are interested in how the growth/decay rate $\lambda$ depends on the spatial frequency $\omega$.  Numerical stability is the statement ``all waves (all $\omega$) decay ($|\lambda|<1$)''.  Unconditional numerical stability is when this occurs regardless of the values of $\Delta t$ and $\Delta x$.
+We are interested in how the growth/decay rate $\lambda$ depends on the spatial frequency $\omega$.  Numerical stability is the statement ``all waves decay,'' that is, that we can show $|\lambda|<1$ for all $\omega$.  Unconditional numerical stability is when this occurs regardless of the values of $\Delta t$ and $\Delta x$.
 
-In this case, if we start from the first form of the scheme $\ast$ above, and substitute \emph{ansatz} $\dagger$, and cancel as much as possible, we get
+In the case of the implicit scheme we are examining, if we start from the first form of the scheme $\ast$ above, and if we substitute \emph{ansatz} $\dagger$ and then cancel as much as possible, we get
     $$\lambda = 1 + \mu \lambda e^{i\omega\Delta x} - 2 \mu \lambda + \mu \lambda e^{-i\omega\Delta x}$$
-or (recall $\cos z = (e^{iz} + e^{-iz}) / 2$)
-    $$\lambda = 1 - 2 \mu \lambda + 2 \mu \lambda \cos(\omega\Delta x)$$
 or
+    $$\lambda = 1 - 2 \mu \lambda + 2 \mu \lambda \cos(\omega\Delta x)$$
+(by recalling $\cos z = (e^{iz} + e^{-iz}) / 2$) or
     $$\lambda (1 + 2\mu (1 - \cos(\omega\Delta x)) = 1$$
-or (recall $2 \sin^2 z = \cos(2z)$)
-    $$\lambda = \frac{1}{1 + 4 \mu \sin^(\omega\Delta x)}.$$
-The point about this last form is that $\lambda > 0$ is obvious \emph{and} $\lambda < 1$ is obvious.  In particular, the scheme makes \emph{all spatial waves (modes) decay}, regardless of the value of $\mu$, and thus regardless of the grid spacings $\Delta t$ and $\Delta x$.  This is unconditional stability.
+or
+    $$\lambda = \frac{1}{1 + 4 \mu \sin^2(\omega\Delta x/2)}$$
+(by recalling $2 \sin^2 z = 1-\cos(2z)$).  The point about our final form is that $\lambda > 0$ is obvious \emph{and} $\lambda < 1$ is obvious.  Thus we have shown that our implicit scheme makes all spatial waves (modes) decay, regardless of the value of $\mu$, and thus regardless of the grid spacings $\Delta t$ and $\Delta x$.  This is unconditional stability.
 
+\prob{6}  FIXME
 
-\prob{6}  
+\prob{7}  Suppose $s = t^{-1/2} x$ and $T(t,x)=t^{-1/2} \phi(s)$.  By the chain rule we can write $T_t$ and $T_{xx}$ with a common power of $t$ and otherwise in terms of $s$:
+\begin{align*}
+T_t &= - \frac{1}{2} t^{-3/2} \phi(s) + t^{-1/2} \phi'(s) \left(-\frac{1}{2}\right) t^{-3/2} x = - \frac{1}{2} t^{-3/2} \phi(s) - \frac{1}{2} t^{-3/2} s \phi'(s), \\
+T_x &= t^{-1/2} \phi'(s) t^{-1/2} = t^{-1} \phi'(s), \\
+T_{xx} &= t^{-1} \phi''(s) t^{-1/2} = t^{-3/2} \phi''(s),
+\end{align*}
+where a prime denotes derivative with respect to $s$.  Thus $T_t = D T_{xx}$ is equivalent to
+    $$- \frac{1}{2} t^{-3/2} \phi(s) - \frac{1}{2} t^{-3/2} s \phi'(s) = D t^{-3/2} \phi''(s).$$
 
-\prob{7}  
+Cancelling the common power of $t$ gives a second-order ODE in $s$ for $\phi(s)$:
+    $$- \frac{1}{2} \left[\phi(s) + s \phi'(s)\right] = D \phi''(s).$$
+But this can be solved because the left side is a derivative, namely $\phi(s) + s \phi'(s) = \left(s \phi(s)\right)'$, so the second-order ODE is $- \frac{1}{2} \left(s \phi(s)\right)' = D \phi''(s)$ or
+    $$- \frac{1}{2} s \phi(s) = D \phi'(s) + C_0$$
+for some constant $C_0$.  Setting $s=0$ and noting that smoothness requires zero slope at the origin (i.e.~$\phi'(0)=0$) so $C_0=0$.  Now we have a first-order ODE which is separable
+    $$- \frac{1}{2D} s \,ds = \frac{d\phi}{\phi}.$$
+Its integral gives
+    $$- \frac{1}{4D} s^2 + C_1 = \ln|\phi|$$
+or, after exponentiating,
+    $$\phi(s) = A e^{- s^2/(4D)}$$
+for some constant $A = \pm e^{C_1}$.
+
+At this point we have our similarity solution, though with an unknown constant:
+    $$T(t,x) = t^{-1/2} \phi(s) = A t^{-1/2} e^{- x^2/(4Dt)}.$$
+The constant must be set, whatever the details, by the fact that the initial condition is a \emph{unit} amount of heat: $T(0,x) = \delta(x)$, the Dirac delta function with $\int_{-\infty}^\infty \delta(x)\,dx = 1$.  One way to use this information is to note that the heat equation is the conservation of energy equation, so the total heat energy $\int_{-\infty}^\infty T(t,x)\,dx$ is independent of $t$.  Thus we can set $A$ by noting $T(1,x)$ has the same total energy as the initial amount of heat:
+    $$\int_{-\infty}^\infty T(1,x)\,dx = \int_{-\infty}^\infty A e^{- x^2/(4D)}\,dx = 1.$$
+Recall, or use a reference to learn that, $\int_{-\infty}^\infty e^{- u^2}\,du = \sqrt{\pi}$.  It follows that
+    $$1 = \int_{-\infty}^\infty A e^{- x^2/(4D)}\,dx = A \sqrt{4D} \int_{-\infty}^\infty e^{- u^2}\,du = A \sqrt{4\pi D}$$
+by substitution $u=x/\sqrt{4D}$.  Thus $A = (4\pi D)^{-1/2}$ and $T(t,x) = (4\pi D t)^{-1/2} e^{- x^2/(4Dt)}$ as claimed.
 
 \prob{8}  
 
