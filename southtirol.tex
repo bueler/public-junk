@@ -1,0 +1,157 @@
+\documentclass[10pt]{amsart}
+%prepared in AMSLaTeX, under LaTeX2e
+\addtolength{\oddsidemargin}{-.7in}
+\addtolength{\evensidemargin}{-.7in}
+\addtolength{\topmargin}{-.4in}
+\addtolength{\textwidth}{1.3in}
+\addtolength{\textheight}{1.0in}
+
+\newcommand{\normalspacing}{\renewcommand{\baselinestretch}{1.05}
+        \tiny\normalsize}
+
+\usepackage{amssymb,fancyvrb,alltt,xspace}
+
+\VerbatimFootnotes
+
+\usepackage{fancyvrb}
+\newcommand{\mfile}[1]{
+\begin{quote}
+\bigskip
+%\VerbatimInput[frame=single]{#1}
+\VerbatimInput[frame=single,label=\fbox{\normalsize \textsl{\,#1\,}},fontfamily=courier,fontsize=\small]{#1}
+\end{quote}
+}
+
+
+% macros
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\Div}{\nabla\cdot}
+\newcommand{\eps}{\epsilon}
+\newcommand{\grad}{\nabla}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\ip}[2]{\ensuremath{\left<#1,#2\right>}}
+\newcommand{\lam}{\lambda}
+\newcommand{\lap}{\triangle}
+\newcommand{\RR}{\mathbb{R}}
+
+\newcommand{\prob}[1]{\bigskip\noindent\large\textbf{#1.}\normalsize }
+\newcommand{\apart}[1]{\quad \textbf{(#1)} \quad }
+\newcommand{\ppart}[1]{\medskip\noindent\textbf{(#1)} \quad }
+
+\newcommand{\Matlab}{\textsc{Matlab}\xspace}
+\newcommand{\Octave}{\textsc{Octave}\xspace}
+
+
+\begin{document}
+\Large\centerline{\textbf{Solutions}}
+
+\medskip
+\small
+\centerline{\emph{These are brief solutions to some notes available at a small town in the Schnalstal valley.}}
+\normalsize
+
+\bigskip\bigskip
+
+\thispagestyle{empty}
+\normalspacing
+
+\prob{1}  Start with two Taylor expansions around $x$:
+    $$f(x\pm \Delta) = f(x) \pm f'(x) \Delta + \frac{1}{2} f''(x) \Delta^2 \pm \frac{1}{6} f'''(x) \Delta^3 + \dots$$
+Subtracting the two:
+    $$f(x+\Delta) - f(x-\Delta) = 2 f'(x) \Delta + \frac{1}{3} f'''(x) \Delta^3 + \dots$$
+Solve for $f'(x)$:
+    $$f'(x) = \frac{f(x+\Delta) - f(x-\Delta)}{2\Delta} - \frac{1}{6} f'''(x) \Delta^2 + \dots$$
+This shows the first result.  For the second we expand to one more term and do the same basic steps, starting with adding the two expansions and then solving for $f''(x)$:
+\begin{gather*}
+    f(x\pm \Delta) = f(x) \pm f'(x) \Delta + \frac{1}{2} f''(x) \Delta^2 \pm \frac{1}{6} f'''(x) \Delta^3 + \frac{1}{24} f^{(4)}(x) \Delta^4 + \dots \\
+    f(x + \Delta) + f(x - \Delta) = 2 f(x) + f''(x) \Delta^2 + \frac{1}{12} f^{(4)}(x) \Delta^4 + \dots \\
+    f''(x) = \frac{f(x + \Delta) - 2 f(x) + f(x - \Delta)}{\Delta^2} - \frac{1}{12} f^{(4)}(x) \Delta^2 + \dots
+\end{gather*}
+This shows the second result.
+
+\prob{2}  In problem \textbf{1} we had $x$ as base-point and we moved $\Delta$ to left and right.  Now we use $x+\Delta/2$ as base-point and move $\Delta/2$ to left and right:
+\begin{gather*}
+f(x) = f(x+\Delta/2) - \frac{1}{2} f'(x+\Delta/2) \Delta + \frac{1}{8} f''(x+\Delta/2) \Delta^2 - \frac{1}{48} f'''(x+\Delta/2) \Delta^3 + \dots \\
+f(x+\Delta) = f(x+\Delta/2) + \frac{1}{2} f'(x+\Delta/2) \Delta + \frac{1}{8} f''(x+\Delta/2) \Delta^2 + \frac{1}{48} f'''(x+\Delta/2) \Delta^3 + \dots
+\end{gather*}
+Subtracting these and solving for $f'(x+\Delta x/2)$ give, in turn,
+\begin{gather*}
+f(x+\Delta) - f(x) = f'(x+\Delta/2) \Delta + \frac{1}{24} f'''(x+\Delta/2) \Delta^3 + \dots \\
+f'(x+\Delta/2) = \frac{f(x+\Delta) - f(x)}{\Delta} - \frac{1}{24} f'''(x+\Delta/2) \Delta^2 + \dots
+\end{gather*}
+as desired.
+
+\prob{3}
+
+\mfile{heatwithloops.m}
+
+\prob{4}  If $\Delta t < 0$ then $\mu = D \Delta t / \Delta x^2 < 0$ also.  Then $T_j^{n+1} = \mu T_{j+1}^n + (1 - 2 \mu) T_j^n + \mu T_{j-1}^n$ writes $T_j^{n+1}$ as a linear combination of the three ``old'' values, but with the coefficients of $T_{j+1}^n$ and $T_{j-1}^n$ both negative.  Though the sum of coefficients is still one (i.e.~$\mu + (1-2\mu) + \mu = 1$), this is not an average for any $\Delta t < 0$.
+
+On the other hand, running
+\begin{verbatim}
+  >> heat(1.0,30,30,-0.001,20);
+\end{verbatim}
+which goes backward in time from $t=0$ to $t=-0.020$, produces an obviously nonsensical distribution of heat (not shown).
+
+\prob{5}  Rewriting (35) for $T_j^{n+1}$ gives
+    $$T_j^{n+1} \stackrel{\ast}{=} T_j^n + \mu T_{j+1}^{n+1} - 2 \mu T_j^{n+1} + \mu T_{j-1}^{n+1}$$
+or
+    $$(1 - 2\mu) T_j^{n+1} = T_j^n + \mu T_{j+1}^{n+1} + \mu T_{j-1}^{n+1}$$
+or
+    $$T_j^{n+1} = \frac{1}{1 - 2\mu} T_j^n + \frac{\mu}{1 - 2\mu} T_{j+1}^{n+1} + \frac{\mu}{1 - 2\mu} T_{j-1}^{n+1}.$$
+
+In the last form we have written $T_j^{n+1}$ as an average of neighboring points.  That is, the coefficients are positive and add to one.  This allows a ``maximum principle'' proof of unconditional convergence, and thus unconditional stability; see reference [37] (= Morton \& Mayers).
+
+An alternative proof of unconditional stability is via a von Neumann-Fourier argument, also in [37].  Specifically, we look at the evolution of waves on the space-time grid:
+    $$T_j^n \stackrel{\dagger}{=} \lambda^n e^{i\omega (j\Delta x)}.$$
+We are interested in how the growth/decay rate $\lambda$ depends on the spatial frequency $\omega$.  Numerical stability is the statement ``all waves (all $\omega$) decay ($|\lambda|<1$)''.  Unconditional numerical stability is when this occurs regardless of the values of $\Delta t$ and $\Delta x$.
+
+In this case, if we start from the first form of the scheme $\ast$ above, and substitute \emph{ansatz} $\dagger$, and cancel as much as possible, we get
+    $$\lambda = 1 + \mu \lambda e^{i\omega\Delta x} - 2 \mu \lambda + \mu \lambda e^{-i\omega\Delta x}$$
+or (recall $\cos z = (e^{iz} + e^{-iz}) / 2$)
+    $$\lambda = 1 - 2 \mu \lambda + 2 \mu \lambda \cos(\omega\Delta x)$$
+or
+    $$\lambda (1 + 2\mu (1 - \cos(\omega\Delta x)) = 1$$
+or (recall $2 \sin^2 z = \cos(2z)$)
+    $$\lambda = \frac{1}{1 + 4 \mu \sin^(\omega\Delta x)}.$$
+The point about this last form is that $\lambda > 0$ is obvious \emph{and} $\lambda < 1$ is obvious.  In particular, the scheme makes \emph{all spatial waves (modes) decay}, regardless of the value of $\mu$, and thus regardless of the grid spacings $\Delta t$ and $\Delta x$.  This is unconditional stability.
+
+
+\prob{6}  
+
+\prob{7}  
+
+\prob{8}  
+
+\prob{9}  
+
+\prob{10}  
+
+\prob{11}  The time-dependent margin radius of the Halfar solution is $R(t) = R_0 (t/t_0)^{1/18}$, an expression which comes from setting $H(t,r)=0$ and solving.  The volume at time $t$ is found by integrating out to this radius.  Using polar coordinates and successive substitutions $s = (t/t_0)^{1/18}$ and then $u=r/(R_0 s)$ we have
+\begin{align*}
+V(t) &= \int_0^{2\pi} \int_0^{R(t)} H(t,r) \,r\,dr\,d\theta \\
+     &= 2\pi \int_0^{R_0 (t/t_0)^{1/18}} H_0 \left(\frac{t_0}{t}\right)^{1/9} \left[1 - \left(\left(\frac{t_0}{t}\right)^{1/18} \frac{r}{R_0}\right)^{4/3}\right]^{3/7} \,r\,dr \\
+     &= 2\pi H_0 R_0^2 \int_0^1 \left(1 - u^{4/3}\right)^{3/7} \,u\,du.
+\end{align*}
+At this point we are done!  The last expression is not known yet,\footnote{The integral can be easily approximated numerically: $\int_0^1 (1 - u^{4/3})^{3/7} \,u\,du \approx 0.31422$.  Thus $V(t) = C H_0 R_0^2$ for a value $C\approx 2$ which can be computed accurately to many digits, if desired.} but it is independent of $t$.
+%>> quadl(@(u) u.*(1 - u.^(4/3)).^(3/7),0,1)
+%ans =  0.31422
+%>> quad(@(u) u.*(1 - u.^(4/3)).^(3/7),0,1)
+%ans =  0.31422
+
+\prob{12}  
+
+\prob{13}  
+
+\prob{14}  
+
+\prob{15}  
+
+\prob{16}  
+
+\prob{17}  
+
+\prob{18}  
+
+\end{document}
+
