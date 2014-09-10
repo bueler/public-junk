@@ -18,7 +18,7 @@
 \begin{quote}
 \bigskip
 %\VerbatimInput[frame=single]{#1}
-\VerbatimInput[frame=single,label=\fbox{\normalsize \textsl{\,#1\,}},fontfamily=courier,fontsize=\small]{#1}
+\VerbatimInput[frame=single,label=\fbox{\normalsize \textsl{\,#1\,}},fontfamily=courier,fontsize=\footnotesize]{#1}
 \end{quote}
 }
 
@@ -144,7 +144,9 @@ Recall, or use a reference to learn that, $\int_{-\infty}^\infty e^{- u^2}\,du =
     $$1 = \int_{-\infty}^\infty A e^{- x^2/(4D)}\,dx = A \sqrt{4D} \int_{-\infty}^\infty e^{- u^2}\,du = A \sqrt{4\pi D}$$
 by substitution $u=x/\sqrt{4D}$.  Thus $A = (4\pi D)^{-1/2}$ and $T(t,x) = (4\pi D t)^{-1/2} e^{- x^2/(4Dt)}$ as claimed.
 
-\prob{8}  
+\prob{8}
+
+\mfile{verifyheat.m}
 
 \prob{9}  
 
