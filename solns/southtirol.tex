@@ -148,9 +148,9 @@ by substitution $u=x/\sqrt{4D}$.  Thus $A = (4\pi D)^{-1/2}$ and $T(t,x) = (4\pi
 
 \mfile{verifyheat.m}
 
-\prob{9}  
+\prob{9}  This is an unsolved problem.
 
-\prob{10}  
+\prob{10}  FIXME
 
 \prob{11}  The time-dependent margin radius of the Halfar solution is $R(t) = R_0 (t/t_0)^{1/18}$, an expression which comes from setting $H(t,r)=0$ and solving.  The volume at time $t$ is found by integrating out to this radius.  Using polar coordinates and successive substitutions $s = (t/t_0)^{1/18}$ and then $u=r/(R_0 s)$ we have
 \begin{align*}
@@ -164,9 +164,9 @@ At this point we are done!  The last expression is not known yet,\footnote{The i
 %>> quad(@(u) u.*(1 - u.^(4/3)).^(3/7),0,1)
 %ans =  0.31422
 
-\prob{12}  
+\prob{12}  Based on introducing errors big and small in \texttt{siaflat.m} I believe this claim.
 
-\prob{13}  
+\prob{13}  The plot of the numerical thickness error shows that all of the error is concentrated near the ice sheet margin.  This is because the margin is steep, that is, the gradient of thickness and surface elevation has unbounded magnitude at the margin.  In fact, merely interpolating the exact margin shape onto the grid introduces errors of the same magnitude as the numerical solution error, a claim easily tested using the Halfar solution; see [10] = Bueler et al.~(2005).  Furthermore, \emph{any} ice flow model (e.g.~SIA to Stokes) will produce an ice sheet shape with a steep margin.  Thus this character of the thickness error is universal and unavoidable.\footnote{Assuming the numerical method does not know the asymptotic shape of the margin, which is non-polynomial and not smooth.  Thus any finite difference, finite element, finite volume, spectral, or hp-finite element model will produce thickness error of the same character and magnitude as the boring finite difference method shown here.}
 
 \prob{14}  
 
