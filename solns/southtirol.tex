@@ -183,7 +183,26 @@ We have used the mass continuity equation (25) and incompressibility (1).  Now u
   $$h_t - b_t = a - \grad h\cdot \mathbf{U}\big|_h + w\big|_h - b_t.$$
 Dropping $-b_t$ from both sides we get the surface kinematical equation (40), as desired.
 
-\prob{15}  FIXME
+\prob{15}  We start this solution by writing both sides of (44) as derivatives:
+    $$\left(2 \,\bar\nu\, H u_x\right)_x = \frac{1}{2} \rho g (1-r) (H^2)_x.$$
+Integrating this and recalling $\bar\nu = B |u_x|^{1/n - 1}$ gives
+    $$2 B |u_x|^{1/n - 1}\, H u_x = \frac{1}{2} \rho g (1-r) H^2 + C_0$$
+for some constant $C_0$.  But (47) applies at the calving front $x=x_c$ so $C_0=0$.  Recalling $B=A^{-1/n}$, cancelling ``$H$'' and simplifying gives
+    $$|u_x|^{1/n - 1}\, u_x = \frac{\rho g (1-r) A^{1/n}}{4} H.$$
+Note $u_x>0$ for this solution.  We can therefore remove the absolute values, take the $n$th power, and use the defined constant $C_s$ to get
+    $$u_x \stackrel{\ast}{=} C_s H^n.$$
+
+On the other hand we can integrate the mass continuity equation $M_0=(uH)_x$ to get $uH = M_0 x + C_1$ for some constant $C_1$.  But at the grounding line $x=x_g=0$ we get $C_1 = u_g H_g$ so
+    $$u H \stackrel{\dagger}{=} M_0 x + u_g H_g.$$
+That is, the flux increases linearly in $x$ from its specified value at the grounding line.
+
+The ``tricky'' step is to multiply equation $\ast$ by $u^n$ to get
+    $$u^n u_x = C_s (uH)^n.$$
+Now we substitute $\dagger$ and recognize that we have a separable ODE for $u(x)$:
+    $$u^n du = C_s (M_0 x + u_g H_g)^n dx.$$
+Integrating from $x_g=0$ to $x$ gives
+    $$\frac{u(x)^{n+1}-u_g^{n+1}}{n+1} = \frac{C_s}{M_0 (n+1)} \left((M_0 x + u_g H_g)^{n+1} - (u_g H_g)^{n+1}\right).$$
+Solving for $u(x)$ gives the velocity part of the van der Veen solution.  Solving $\dagger$ for $H(x)$ gives the thickness part of the van der Veen solution.
 
 \prob{16}  FIXME
 
