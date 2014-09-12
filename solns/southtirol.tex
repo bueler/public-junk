@@ -184,7 +184,19 @@ by substitution $u=x/\sqrt{4D}$.  Thus $A = (4\pi D)^{-1/2}$ and $T(t,x) = (4\pi
 
 \prob{9}  This is an unsolved problem.
 
-\prob{10}  FIXME
+\prob{10}  \emph{Though this problem only requires the ability to differentiate, it may be the hardest one in this exercise set!}
+
+For polar coordinates, note that if $f=f(r)$ then $\grad f = f_r \hat{\mathbf{r}}$.  Also, if $\mathbf{X}=\alpha \hat{\mathbf{r}}$ then $\Div \mathbf{X} = \frac{1}{r} \left(r \alpha\right)_r$.
+
+Next define new variables $\tau = t/t_0$ and $\rho = r/R_0$ so
+    $$H = H_0 \frac{1}{\tau^{1/9}} \left[1 - \left( \frac{\rho}{\tau^{1/18}} \right)^{4/3}\right]^{3/7}.$$
+Then, noting $H_r < 0$ for our solution, equation (26) is equivalent to
+    $$\frac{1}{t_0} H_\tau = \frac{\Gamma}{R_0^4} \frac{1}{\rho} \left(\rho H^5 H_\rho^3\right)_\rho.$$
+By the formula for $t_0$ just after equation (39), this is equivalent to
+    $$18 H_0^7 \left(\frac{4}{7}\right)^3 H_\tau \stackrel{\ast}{=} \frac{1}{\rho} \left(\rho H^5 H_\rho^3\right)_\rho.$$
+We will compute the sides of $\ast$ and show they are the same.
+
+FIXME
 
 \prob{11}  The time-dependent margin radius of the Halfar solution is $R(t) = R_0 (t/t_0)^{1/18}$, an expression which comes from setting $H(t,r)=0$ and solving.  The volume at time $t$ is found by integrating out to this radius.  Using polar coordinates and successive substitutions $s = (t/t_0)^{1/18}$ and then $u=r/(R_0 s)$ we have
 \begin{align*}
