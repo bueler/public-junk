@@ -192,15 +192,15 @@ V(t) &= \int_0^{2\pi} \int_0^{R(t)} H(t,r) \,r\,dr\,d\theta \\
      &= 2\pi \int_0^{R_0 (t/t_0)^{1/18}} H_0 \left(\frac{t_0}{t}\right)^{1/9} \left[1 - \left(\left(\frac{t_0}{t}\right)^{1/18} \frac{r}{R_0}\right)^{4/3}\right]^{3/7} \,r\,dr \\
      &= 2\pi H_0 R_0^2 \int_0^1 \left(1 - u^{4/3}\right)^{3/7} \,u\,du.
 \end{align*}
-At this point we are done!  The last expression is not known yet,\footnote{The integral can be easily approximated numerically: $\int_0^1 (1 - u^{4/3})^{3/7} \,u\,du \approx 0.31422$.  Thus $V(t) = C H_0 R_0^2$ for a value $C\approx 2$ which can be computed accurately to many digits, if desired.} but it is independent of $t$.
+At this point we are done!  The last expression is not fully-computed yet,\footnote{The integral can be easily approximated numerically: $\int_0^1 (1 - u^{4/3})^{3/7} \,u\,du \approx 0.31422$.  Thus $V(t) = C H_0 R_0^2$ for a value $C\approx 2$ which can be computed accurately to many digits, if desired.} but it is independent of $t$.
 %>> quadl(@(u) u.*(1 - u.^(4/3)).^(3/7),0,1)
 %ans =  0.31422
 %>> quad(@(u) u.*(1 - u.^(4/3)).^(3/7),0,1)
 %ans =  0.31422
 
-\prob{12}  Based on introducing errors big and small in \texttt{siaflat.m}, I believe this claim.
+\prob{12}  Based on introducing errors big and small in \texttt{siaflat.m}, I believe this claim.  But then, I would.  It is my claim.
 
-\prob{13}  The numerical thickness error plot shows that all of the error is concentrated near the ice sheet margin.  This is because the margin is steep, that is, the gradient of thickness and surface elevation has unbounded magnitude at the margin.  In fact, merely interpolating the exact margin shape onto the grid introduces errors of the same magnitude as the numerical solution error, a claim easily tested using the Halfar solution; see [10] = Bueler et al.~(2005).  Furthermore, \emph{any} ice flow model (e.g.~SIA to Stokes) will produce an ice sheet shape with a steep margin, because the physics leads to such shapes.  Thus this character of the numerical thickness error is universal across models, and unavoidable.\footnote{Assuming the numerical method does not know the asymptotic shape of the margin, which is non-polynomial and not smooth.  Thus any finite difference, finite element, finite volume, spectral, or hp-finite element model will produce thickness error of the same character and magnitude as the boring finite difference method shown here.}
+\prob{13}  The numerical thickness error plot shows that all of the error is concentrated near the ice sheet margin.  This is because the margin is steep, that is, the gradient of thickness and surface elevation has unbounded magnitude at the margin.  In fact, merely interpolating the exact margin shape onto the grid introduces errors of the same magnitude as the numerical solution error, a claim easily tested using the Halfar solution; see [10] = Bueler et al.~(2005).  Furthermore, \emph{any} ice flow model (e.g.~SIA to Stokes) will produce an ice sheet shape with a steep margin, because the physics leads to such shapes.  Thus this character of the numerical thickness error is universal across models, and unavoidable.\footnote{Assuming the numerical method does not know the asymptotic shape of the margin, which is non-polynomial, and which is not smooth at the free boundary.  Thus any finite difference, finite element, finite volume, spectral, or hp-finite element model will produce thickness error of the same character and magnitude as the boring finite difference method shown here.}
 
 \prob{14}  Let's start with the mass continuity equation (25), write the vertically-averaged velocity as an integral, and then use Leibniz's rule:
 \begin{align*}
