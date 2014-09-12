@@ -43,6 +43,11 @@
 
 
 \begin{document}
+\scriptsize
+\noindent September 2014 \hfill Ed Bueler
+
+\vspace{10mm}
+
 \Large\centerline{\textbf{Solutions}}
 
 \medskip
@@ -96,24 +101,48 @@ which goes backward in time from $t=0$ to $t=-0.020$, produces an obviously nons
 \prob{5}  Rewriting (35) for $T_j^{n+1}$ gives
     $$T_j^{n+1} \stackrel{\ast}{=} T_j^n + \mu T_{j+1}^{n+1} - 2 \mu T_j^{n+1} + \mu T_{j-1}^{n+1}$$
 or
-    $$T_j^{n+1} = \frac{1}{1 - 2\mu} T_j^n + \frac{\mu}{1 - 2\mu} T_{j+1}^{n+1} + \frac{\mu}{1 - 2\mu} T_{j-1}^{n+1}.$$
+    $$T_j^{n+1} = \frac{1}{1 + 2\mu} T_j^n + \frac{\mu}{1 + 2\mu} T_{j+1}^{n+1} + \frac{\mu}{1 + 2\mu} T_{j-1}^{n+1}.$$
 In the last form we have written $T_j^{n+1}$ as an average of neighboring points.  That is, the coefficients are positive and add to one.  This allows a ``maximum principle'' proof of unconditional convergence, and thus unconditional stability; see reference [37] (= Morton \& Mayers).
 
-An alternative proof of unconditional stability is via a von Neumann-Fourier argument [37].  For such an argument we look at the evolution of waves on the space-time grid:
+An alternative proof of unconditional stability uses a von Neumann-Fourier argument [37].  This argument examines the evolution of waves $e^{i\omega x}$ on the space-time grid:
     $$T_j^n \stackrel{\dagger}{=} \lambda^n e^{i\omega (j\Delta x)}.$$
-We are interested in how the growth/decay rate $\lambda$ depends on the spatial frequency $\omega$.  Numerical stability is the statement ``all waves decay,'' that is, that we can show $|\lambda|<1$ for all $\omega$.  Unconditional numerical stability is when this occurs regardless of the values of $\Delta t$ and $\Delta x$.
+We are interested in how the growth/decay rate $\lambda$ depends on the spatial frequency $\omega$.  Numerical stability is the statement ``all waves decay,'' that is, $|\lambda|<1$ for all $\omega$.  Unconditional numerical stability is when this occurs regardless of the values of $\Delta t$ and $\Delta x$, that is, regardless of the value of $\mu$.
 
-In the case of the implicit scheme we are examining, if we start from the first form of the scheme $\ast$ above, and if we substitute \emph{ansatz} $\dagger$ and then cancel as much as possible, we get
+In the case of the current implicit scheme, we substitute \emph{ansatz} $\dagger$ into $\ast$ and then cancel as much as possible:
     $$\lambda = 1 + \mu \lambda e^{i\omega\Delta x} - 2 \mu \lambda + \mu \lambda e^{-i\omega\Delta x}$$
-or
-    $$\lambda = 1 - 2 \mu \lambda + 2 \mu \lambda \cos(\omega\Delta x)$$
-(by recalling $\cos z = (e^{iz} + e^{-iz}) / 2$) or
-    $$\lambda (1 + 2\mu (1 - \cos(\omega\Delta x)) = 1$$
-or
+or $\lambda = 1 - 2 \mu \lambda + 2 \mu \lambda \cos(\omega\Delta x)$ by recalling $\cos z = (e^{iz} + e^{-iz}) / 2$.  Solving for $\lambda$ gives
     $$\lambda = \frac{1}{1 + 4 \mu \sin^2(\omega\Delta x/2)}$$
-(by recalling $2 \sin^2 z = 1-\cos(2z)$).  The point about our final form is that $\lambda > 0$ is obvious \emph{and} $\lambda < 1$ is obvious.  Thus we have shown that our implicit scheme makes all spatial waves (modes) decay, regardless of the value of $\mu$, and thus regardless of the grid spacings $\Delta t$ and $\Delta x$.  This is unconditional stability.
+because $2 \sin^2 z = 1-\cos(2z)$.  Thus $\lambda > 0$ is obvious and also $\lambda < 1$ is obvious.
 
-\prob{6}  FIXME
+This shows that our implicit scheme makes all spatial waves (modes) decay, regardless of the value of $\mu$, and thus regardless of the grid spacings $\Delta t$ and $\Delta x$.  This is unconditional stability.
+
+\prob{6}  (a) The scheme is
+    $$\frac{u_j^{n+1} - u_j^n}{\Delta t} = D_0 \frac{u_{j+1}^n - 2 u_j^n + u_{j-1}^n}{\Delta x^2} + E_0 \frac{u_{j+1}^n - u_{j-1}^n}{2\Delta x}.$$
+Define constants $\mu = D_0 \Delta t/\Delta x^2$ and $\nu = E_0 \Delta t/\Delta x$.  Note $\mu>0$ but $\nu$ can be of either sign.  Solving for $u_j^{n+1}$ and collecting terms gives
+    $$u_j^{n+1} = \left(\mu - \frac{\nu}{2}\right) u_{j-1}^n + (1-2\mu) u_j^n + \left(\mu + \frac{\nu}{2}\right) u_{j+1}^n.$$
+
+\noindent (b)  In order for the last equation to have all positive (i.e.~nonnegative) coefficients, both $\mu - \frac{\nu}{2} \ge 0$ and $\mu - \frac{\nu}{2} \ge 0$ are required, as well as $1-2\mu \ge 0$.  The last condition is the familiar time-step restriction from the notes, namely $\Delta t \le \Delta x^2 / (2 D_0)$.
+
+The other two conditions are new.  They can be combined into one inequality, with several equivalent forms:
+    $$\mu - \frac{|\nu|}{2} \ge 0  \quad\iff\quad  \frac{D_0 \Delta t}{\Delta x^2} \ge \frac{|E_0| \Delta t}{2\Delta x}  \quad\iff\quad  \frac{D_0}{\Delta x} \ge \frac{|E_0|}{2}  \quad\iff\quad  \Delta x \le \frac{2 D_0}{|E_0|}$$
+The last form gets to the point: if $D_0/|E_0|$ is small then we \emph{must use a fine grid just to have a stable calculation}.  This is not a time-step restriction; if $D_0/|E_0|$ is small enough we might not even have enough computer memory to do a single calculation!
+
+In summary, if advection dominates diffusion ($|E_0| \gg D_0$) then our explicit, centered scheme will be difficult to use.  It will require a certain spatial resolution just to be stable, and then the diffusive time-step restriction may force unpleasantly short time steps.
+
+\noindent (c)  We calculate with the product rule, and with a reminder about gradient and divergence in two variables,
+\begin{align*}
+\Div \left(D \grad u\right) &= \Div \left((D\,u_x,D\,u_y)\right) = (D\,u_x)_x + (D\,u_y)_y \\
+  &= D\,u_{xx} + D_x\,u_x + D\,u_{yy} + D_y\,u_y = D (u_{xx} + u_{yy}) + (D_x,D_y)\cdot(u_x,u_y) \\
+  &= D \grad^2 u + \grad D \cdot \grad u.
+\end{align*}
+Note that this means we can write the diffusion PDE
+    $$u_t = \Div \left(D \grad u\right)$$
+as
+    $$u_t = D \grad^2 u + \grad D \cdot \grad u$$
+if we wanted to.  That is, we could write it with a diffusion part ($D \grad^2 u$) and an advection part ($\grad D \cdot \grad u$).
+
+\noindent (d)  If we expanded ``$\Div \left(D \grad u\right)$'' as in (c) then we can write the diffusion equation $u_t = \Div \left(D \grad u\right)$ as a diffusion-advection equation where the strength of the advection velocity $\grad D$ relates to the variation in $D$, not its magnitude.  This is not a good idea if we are using centered finite difference schemes!  That is because $D$ may be small but irregular, with large slopes---in fact it is exactly this way in the SIA context---and then the stability of our scheme is controlled by the steepness of $D$.  Having the time steps controlled by the magnitude of $D$ is o.k.~because this magnitude sets the time scale for the physical process of diffusion.  FIXME
+
 
 \prob{7}  Suppose $s = t^{-1/2} x$ and $T(t,x)=t^{-1/2} \phi(s)$.  By the chain rule we can write $T_t$ and $T_{xx}$ with a common power of $t$ and otherwise in terms of $s$:
 \begin{align*}
