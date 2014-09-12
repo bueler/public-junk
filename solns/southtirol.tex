@@ -119,29 +119,34 @@ This shows that our implicit scheme makes all spatial waves (modes) decay, regar
 \prob{6}  (a) The scheme is
     $$\frac{u_j^{n+1} - u_j^n}{\Delta t} = D_0 \frac{u_{j+1}^n - 2 u_j^n + u_{j-1}^n}{\Delta x^2} + E_0 \frac{u_{j+1}^n - u_{j-1}^n}{2\Delta x}.$$
 Define constants $\mu = D_0 \Delta t/\Delta x^2$ and $\nu = E_0 \Delta t/\Delta x$.  Note $\mu>0$ but $\nu$ can be of either sign.  Solving for $u_j^{n+1}$ and collecting terms gives
-    $$u_j^{n+1} = \left(\mu - \frac{\nu}{2}\right) u_{j-1}^n + (1-2\mu) u_j^n + \left(\mu + \frac{\nu}{2}\right) u_{j+1}^n.$$
+    $$u_j^{n+1} = \left(\mu - \frac{\nu}{2}\right) u_{j-1}^n + \big(1-2\mu\big) u_j^n + \left(\mu + \frac{\nu}{2}\right) u_{j+1}^n.$$
 
-\noindent (b)  In order for the last equation to have all positive (i.e.~nonnegative) coefficients, both $\mu - \frac{\nu}{2} \ge 0$ and $\mu - \frac{\nu}{2} \ge 0$ are required, as well as $1-2\mu \ge 0$.  The last condition is the familiar time-step restriction from the notes, namely $\Delta t \le \Delta x^2 / (2 D_0)$.
+\medskip
+\noindent (b)  In order for the last equation to have all nonnegative coefficients, both $\mu - \frac{\nu}{2} \ge 0$ and $\mu + \frac{\nu}{2} \ge 0$ are required, as well as $1-2\mu \ge 0$.  The last condition is the familiar time-step restriction from the notes, namely $\Delta t \le \Delta x^2 / (2 D_0)$.
 
 The other two conditions are new.  They can be combined into one inequality, with several equivalent forms:
     $$\mu - \frac{|\nu|}{2} \ge 0  \quad\iff\quad  \frac{D_0 \Delta t}{\Delta x^2} \ge \frac{|E_0| \Delta t}{2\Delta x}  \quad\iff\quad  \frac{D_0}{\Delta x} \ge \frac{|E_0|}{2}  \quad\iff\quad  \Delta x \le \frac{2 D_0}{|E_0|}$$
 The last form gets to the point: if $D_0/|E_0|$ is small then we \emph{must use a fine grid just to have a stable calculation}.  This is not a time-step restriction; if $D_0/|E_0|$ is small enough we might not even have enough computer memory to do a single calculation!
 
-In summary, if advection dominates diffusion ($|E_0| \gg D_0$) then our explicit, centered scheme will be difficult to use.  It will require a certain spatial resolution just to be stable, and then the diffusive time-step restriction may force unpleasantly short time steps.
+In summary, if advection dominates diffusion ($|E_0| \gg D_0$) then our explicit, centered scheme will be difficult to use.  It will require a certain minimally-fine spatial resolution just to be stable, and then the diffusive time-step restriction may force unpleasantly short time steps.
 
-\noindent (c)  We calculate with the product rule, and with a reminder about gradient and divergence in two variables,
+\medskip
+\noindent (c)  We calculate with the product rule, including a reminder about gradient and divergence in two variables,
 \begin{align*}
 \Div \left(D \grad u\right) &= \Div \left((D\,u_x,D\,u_y)\right) = (D\,u_x)_x + (D\,u_y)_y \\
   &= D\,u_{xx} + D_x\,u_x + D\,u_{yy} + D_y\,u_y = D (u_{xx} + u_{yy}) + (D_x,D_y)\cdot(u_x,u_y) \\
   &= D \grad^2 u + \grad D \cdot \grad u.
 \end{align*}
-Note that this means we can write the diffusion PDE
+This means we can write the diffusion PDE
     $$u_t = \Div \left(D \grad u\right)$$
-as
-    $$u_t = D \grad^2 u + \grad D \cdot \grad u$$
-if we wanted to.  That is, we could write it with a diffusion part ($D \grad^2 u$) and an advection part ($\grad D \cdot \grad u$).
+ in diffusion-advection form as
+    $$u_t = D \grad^2 u + \grad D \cdot \grad u.$$
+That is, we could write the diffusion PDE with separate diffusion part ($D \grad^2 u$) and advection part ($\grad D \cdot \grad u$), where the advection speed is $|\grad D|$.
 
-\noindent (d)  If we expanded ``$\Div \left(D \grad u\right)$'' as in (c) then we can write the diffusion equation $u_t = \Div \left(D \grad u\right)$ as a diffusion-advection equation where the strength of the advection velocity $\grad D$ relates to the variation in $D$, not its magnitude.  This is not a good idea if we are using centered finite difference schemes!  That is because $D$ may be small but irregular, with large slopes---in fact it is exactly this way in the SIA context---and then the stability of our scheme is controlled by the steepness of $D$.  Having the time steps controlled by the magnitude of $D$ is o.k.~because this magnitude sets the time scale for the physical process of diffusion.  FIXME
+\medskip
+\noindent (d)  If we expand ``$\Div \left(D \grad u\right)$'' as in (c) then the strength of the advection relates to the \emph{variability} in $D$, not its magnitude.  This is not a good idea!  That is because $D$ may be small but irregular, with large slopes---in fact it is exactly this way in the SIA context---and then the stability of our scheme is controlled by the steepness of $D$.  Having the time steps controlled by the magnitude of $D$ is o.k.~because it is this magnitude that sets the time scale for the physical process of diffusion.
+
+The explicit centered scheme used in the notes (see \texttt{diffusion.m}) does not require expanding the diffusion PDE into diffusion-advection form.  Instead we evaluate the diffusivity on the staggered grid, and thereby have a centered scheme allowing variability in $D$, but where the only stability restriction depends on the maximum magnitude of $D$ and not its variability.
 
 
 \prob{7}  Suppose $s = t^{-1/2} x$ and $T(t,x)=t^{-1/2} \phi(s)$.  By the chain rule we can write $T_t$ and $T_{xx}$ with a common power of $t$ and otherwise in terms of $s$:
