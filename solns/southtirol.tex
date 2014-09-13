@@ -162,7 +162,7 @@ Cancelling the common power of $t$ gives a second-order ODE in $s$ for $\phi(s)$
     $$- \frac{1}{2} \left[\phi(s) + s \phi'(s)\right] = D \phi''(s).$$
 But this can be solved because the left side is a derivative, namely $\phi(s) + s \phi'(s) = \left(s \phi(s)\right)'$, so the second-order ODE is $- \frac{1}{2} \left(s \phi(s)\right)' = D \phi''(s)$ or
     $$- \frac{1}{2} s \phi(s) = D \phi'(s) + C_0$$
-for some constant $C_0$.  Setting $s=0$ and noting that smoothness requires zero slope at the origin (i.e.~$\phi'(0)=0$) so $C_0=0$.  Now we have a first-order ODE which is separable
+for some constant $C_0$.  Setting $s=0$, and noting that smoothness requires zero slope at the origin (i.e.~$\phi'(0)=0$), we get $C_0=0$.  Now we have a first-order ODE which is separable
     $$- \frac{1}{2D} s \,ds = \frac{d\phi}{\phi}.$$
 Its integral gives
     $$- \frac{1}{4D} s^2 + C_1 = \ln|\phi|$$
@@ -172,7 +172,7 @@ for some constant $A = \pm e^{C_1}$.
 
 At this point we have our similarity solution, though with an unknown constant:
     $$T(t,x) = t^{-1/2} \phi(s) = A t^{-1/2} e^{- x^2/(4Dt)}.$$
-The constant must be set, whatever the details, by the fact that the initial condition is a \emph{unit} amount of heat: $T(0,x) = \delta(x)$, the Dirac delta function with $\int_{-\infty}^\infty \delta(x)\,dx = 1$.  One way to use this information is to note that the heat equation is the conservation of energy equation, so the total heat energy $\int_{-\infty}^\infty T(t,x)\,dx$ is independent of $t$.  Thus we can set $A$ by noting $T(1,x)$ has the same total energy as the initial amount of heat:
+The constant must be set by the fact that the initial condition is a \emph{unit} amount of heat: $T(0,x) = \delta(x)$, the Dirac delta function with $\int_{-\infty}^\infty \delta(x)\,dx = 1$.  One way to use this information is to note that the heat equation is the conservation of energy equation, so the total heat energy $\int_{-\infty}^\infty T(t,x)\,dx$ is independent of $t$.  Thus we can set $A$ by noting $T(1,x)$ has the same total energy as the initial amount of heat:
     $$\int_{-\infty}^\infty T(1,x)\,dx = \int_{-\infty}^\infty A e^{- x^2/(4D)}\,dx = 1.$$
 Recall, or use a reference to learn that, $\int_{-\infty}^\infty e^{- u^2}\,du = \sqrt{\pi}$.  It follows that
     $$1 = \int_{-\infty}^\infty A e^{- x^2/(4D)}\,dx = A \sqrt{4D} \int_{-\infty}^\infty e^{- u^2}\,du = A \sqrt{4\pi D}$$
