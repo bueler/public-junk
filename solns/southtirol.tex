@@ -199,14 +199,20 @@ First,
 On the other hand,
     $$H_\rho = - H_0 \left(\frac{4}{7}\right) \tau^{-5/27} \rho^{1/3} \left[1 - \left( \frac{\rho}{\tau^{1/18}} \right)^{4/3}\right]^{-4/7}$$
 so
-    $$\rho H^5 H_\rho^3 = -\rho^2 H_0^8 \left(\frac{4}{7}\right)^3 \tau^{-30/27} \left[1 - \left( \frac{\rho}{\tau^{1/18}} \right)^{4/3}\right]^{3/7}$$
-and
+    $$\rho H^5 H_\rho^3 = -\rho^2 H_0^8 \left(\frac{4}{7}\right)^3 \tau^{-30/27} \left[1 - \left( \frac{\rho}{\tau^{1/18}} \right)^{4/3}\right]^{3/7}.$$
+Recalling $\ast$, we calculate
 \begin{align*}
-\left(\rho H^5 H_\rho^3\right)_\rho &= - H_0^8 \left(\frac{4}{7}\right)^3 \tau^{-30/27} \left\{2 \rho \left[1 - \left( \frac{\rho}{\tau^{1/18}} \right)^{4/3}\right]^{3/7} + \rho^2 \left(\frac{3}{7}\right) \left[1 - \left( \frac{\rho}{\tau^{1/18}} \right)^{4/3}\right]^{-4/7}  \left(\frac{-4}{3}\right) \frac{\rho^{1/3}}{\tau^{2/27}}\right\}
+\left(\rho H^5 H_\rho^3\right)_\rho &= - H_0^8 \left(\frac{4}{7}\right)^3 \tau^{-30/27} \left\{2 \rho \left[1 - \left( \frac{\rho}{\tau^{1/18}} \right)^{4/3}\right]^{3/7} + \rho^2 \left(\frac{3}{7}\right) \left[1 - \left( \frac{\rho}{\tau^{1/18}} \right)^{4/3}\right]^{-4/7}  \left(\frac{-4}{3}\right) \frac{\rho^{1/3}}{\tau^{2/27}}\right\},
 \end{align*}
-and
+so, with some simplification,
+\begin{align*}
+\frac{1}{\rho} \left(\rho H^5 H_\rho^3\right)_\rho &= - H_0^8 \left(\frac{4}{7}\right)^3 \tau^{-10/9} \left\{ 2 \left[1 - \left( \frac{\rho}{\tau^{1/18}} \right)^{4/3}\right]^{3/7} - \left(\frac{4}{7}\right) \frac{\rho^{4/3}}{\tau^{2/27}} \left[1 - \left( \frac{\rho}{\tau^{1/18}} \right)^{4/3}\right]^{-4/7} \right\}.
+\end{align*}
 
-FIXME
+Comparing $H_\tau$ above to the last expression, this is starting to look good!  We have calculated the right-hand side of $\ast$.  The left side is
+    $$18 H_0^7 \left(\frac{4}{7}\right)^3 H_\tau = - H_0^8 \left(\frac{4}{7}\right)^3 \tau^{-10/9} \left\{ 2 \left[1 - \left( \frac{\rho}{\tau^{1/18}} \right)^{4/3}\right]^{3/7} - \left(\frac{4}{7}\right) \frac{\rho^{4/3}}{\tau^{2/27}} \left[1 - \left( \frac{\rho}{\tau^{1/18}} \right)^{4/3}\right]^{-4/7} \right\}.$$
+This is the same as our expression for the right-hand side.  Thus the Halfar solution is indeed a solution to the SIA equation.\footnote{Of course, P.~Halfar did not find the solution this way!  One does not just guess such a formula and then check it.  Instead, he or she started with a similarity variable $s = t^\beta r$ and looked for an ODE which the ``self-similar shape'' $\phi(s)$ satisfied.  See exercise \textbf{7} for the heat equation version of such a calculation.  See also reference [10] = Bueler et al.~(2005).}
+
 
 \prob{11}  The time-dependent margin radius of the Halfar solution is $R(t) = R_0 (t/t_0)^{1/18}$, an expression which comes from setting $H(t,r)=0$ and solving.  The volume at time $t$ is found by integrating out to this radius.  Using polar coordinates and successive substitutions $s = (t/t_0)^{1/18}$ and then $u=r/(R_0 s)$ we have
 \begin{align*}
