@@ -1,5 +1,7 @@
 function gencount = mcmc(samples,red)
-% MCMC  try out Markov Chain Monte Carlo, i.e. the Metropolis algorithm
+% MCMC  try out Markov Chain Monte Carlo, i.e. the Metropolis algorithm.
+% Example:
+%    >> mcmc(500,20)
 
 if (nargin < 1) | (nargin > 2)
     error(strcat('usage:   gencount = mcmc(samples,red)',
@@ -8,11 +10,11 @@ elseif nargin < 2
     red = 0;
 end
 
-f = @(x) (5*x(1).^2 + 1) * exp(- x'*x);                      % f>0 and unnormalized
-%f = @(x) x(1).^2 * exp(- x'*x) .* (all(abs(x)<3));
+f = @(x) (5*x(1).^2 + 1) * exp(- x'*x);   % f>0 and unnormalized
+L = 3;
 
 subplot(4,1,1:3)
-plot(-3:.1:3)
+plot(-L:.1:L)
 view(2)
 hold on
 
@@ -21,9 +23,9 @@ fX = f(X);
 XX = zeros(2,samples);
 XX(:,1) = X;
 sigma = 0.5;
-marker = 'r*';
 gencount = 0;
 k = 1;
+showit(X,fX,k)
 while k < samples
     Xp = X + sigma * randn(2,1);      % proposed
     fXp = f(Xp);
@@ -33,20 +35,32 @@ while k < samples
         if (ar > 1) | (ar > rand(1))
             X = Xp;
             fX = fXp;
-            if k > red
-                marker = 'ko';
-            end
-            plot3(X(1),X(2),f(X)+.01,marker)
+            showit(X,fX,k)
             k = k + 1;
             XX(:,k) = X;
+        else
+            showreject(X,Xp)
         end
     end
 end
 hold off
-axis([-3 3 -3 3])
+axis([-L L -L L])
 
 subplot(4,1,4)
-hist(XX(1,red+1:end),-3+.1:.2:3-.1)
+hist(XX(1,red+1:end),-L+.1:.2:L-.1)
+
+    function showit(X,fX,k)
+        if k <= red
+            marker = 'r*';
+        else
+            marker = 'ko';
+        end
+        plot3(X(1),X(2),fX+0.1,marker)
+    end
+
+    function showreject(X,Xp)
+        plot3([X(1) Xp(1)],[X(2) Xp(2)],[10 10],'color',[0 0 0]+.7,'linewidth',0.6)
+    end
 
     function plot(a)
         [xx,yy] = meshgrid(a,a);
@@ -56,10 +70,7 @@ hist(XX(1,red+1:end),-3+.1:.2:3-.1)
             zz(j,k) = f([xx(j,k) yy(j,k)]');
           end
         end
-        %h = surf(xx,yy,zz);
-        %set(h,'edgecolor','none')
         contour(xx,yy,zz,30);
-        %clabel(h)
     end
 end
 
