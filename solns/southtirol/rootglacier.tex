@@ -44,7 +44,7 @@
 
 \begin{document}
 \scriptsize
-\noindent June 2016 \hfill Ed Bueler
+\noindent June 2018 \hfill Ed Bueler
 
 \vspace{10mm}
 
@@ -52,7 +52,7 @@
 
 \medskip
 \small
-\centerline{\emph{These are reasonably-complete solutions to some notes available at a small town near the Root Glacier.}}
+\centerline{\emph{These are not complete solutions to some notes available at a small town near the Root Glacier.}}
 \normalsize
 
 \bigskip\bigskip
@@ -182,7 +182,6 @@ by substitution $u=x/\sqrt{4D}$.  Thus $A = (4\pi D)^{-1/2}$ and $T(t,x) = (4\pi
 
 \mfile{verifyheat.m}
 
-\prob{9}  This is an unsolved problem.
 
 \prob{10}  \emph{Though this problem only requires the ability to differentiate, it may be the hardest one in this exercise set!}  For polar coordinates, recall that if $f=f(r)$ then $\grad f = f_r \hat{\mathbf{r}}$, and if $\mathbf{X}=\alpha \hat{\mathbf{r}}$ then $\Div \mathbf{X} = \frac{1}{r} \left(r \alpha\right)_r$.
 
@@ -211,7 +210,7 @@ so, with some simplification,
 
 Comparing $H_\tau$ above to the last expression, this is starting to look good!  We have calculated the right-hand side of $\ast$.  The left side is
     $$18 H_0^7 \left(\frac{4}{7}\right)^3 H_\tau = - H_0^8 \left(\frac{4}{7}\right)^3 \tau^{-10/9} \left\{ 2 \left[1 - \left( \frac{\rho}{\tau^{1/18}} \right)^{4/3}\right]^{3/7} - \left(\frac{4}{7}\right) \frac{\rho^{4/3}}{\tau^{2/27}} \left[1 - \left( \frac{\rho}{\tau^{1/18}} \right)^{4/3}\right]^{-4/7} \right\}.$$
-This is the same as our expression for the right-hand side.  Thus the Halfar solution is indeed a solution to the SIA equation.\footnote{Of course, P.~Halfar did not find the solution this way!  One does not just guess such a formula and then check it.  Instead, he or she started with a similarity variable $s = t^\beta r$ and looked for an ODE which the ``self-similar shape'' $\phi(s)$ satisfied.  See exercise \textbf{7} for the heat equation version of such a calculation.  See also reference [10] = Bueler et al.~(2005).}
+This is the same as our expression for the right-hand side.  Thus the Halfar solution is indeed a solution to the SIA equation.\footnote{P.~Halfar did not find the solution this way.  One does not just guess such a formula and then check it.  Instead, he or she started with a similarity variable $s = t^\beta r$ and looked for an ODE which the ``self-similar shape'' $\phi(s)$ satisfied.  See exercise \textbf{7} for the heat equation version of such a calculation.  See also reference [10] = Bueler et al.~(2005).}
 
 
 \prob{11}  The time-dependent margin radius of the Halfar solution is $R(t) = R_0 (t/t_0)^{1/18}$, an expression which comes from setting $H(t,r)=0$ and solving.  The volume at time $t$ is found by integrating out to this radius.  Using polar coordinates and successive substitutions $s = (t/t_0)^{1/18}$ and then $u=r/(R_0 s)$ we have
@@ -225,8 +224,6 @@ At this point we are done!  The last expression is not fully-computed yet,\footn
 %ans =  0.31422
 %>> quad(@(u) u.*(1 - u.^(4/3)).^(3/7),0,1)
 %ans =  0.31422
-
-\prob{12}  Based on introducing errors big and small in \texttt{siaflat.m}, I believe this claim.  But then, I would.  It is my claim.
 
 \prob{13}  The numerical thickness error plot shows that all of the error is concentrated near the ice sheet margin.  This is because the margin is steep, that is, the gradient of thickness and surface elevation has unbounded magnitude at the margin.  In fact, merely interpolating the exact margin shape onto the grid introduces errors of the same magnitude as the numerical solution error, a claim easily tested using the Halfar solution; see [10] = Bueler et al.~(2005).  Furthermore, \emph{any} ice flow model (e.g.~SIA to Stokes) will produce an ice sheet shape with a steep margin, because the physics leads to such shapes.  Thus this character of the numerical thickness error is universal across models, and unavoidable.\footnote{Assuming the numerical method does not know the asymptotic shape of the margin, which is non-polynomial, and which is not smooth at the free boundary.  Thus any finite difference, finite element, finite volume, spectral, or hp-finite element model will produce thickness error of the same character and magnitude as the boring finite difference method shown here.}
 
@@ -266,27 +263,17 @@ Integrating from $x_g=0$ to $x$ gives
     $$\frac{u(x)^{n+1}-u_g^{n+1}}{n+1} = \frac{C_s}{M_0 (n+1)} \left((M_0 x + u_g H_g)^{n+1} - (u_g H_g)^{n+1}\right).$$
 Solving for $u(x)$ gives the velocity part of the van der Veen solution.  Solving $\dagger$ for $H(x)$ gives the thickness part of the van der Veen solution.
 
-\prob{16}  \emph{I have decided this is not a good exercise.  It will be deleted from future versions of the notes.}
-
-\prob{17}  From (5), by taking norms (second invariants) we have a scalar equation
-    $$2 |Du|^2 = Du_{ij} Du_{ij} = (A \tau^2 \tau_{ij})\,(A \tau^2 \tau_{ij}) = A^2 \tau^4 \tau_{ij} \tau_{ij} = 2 A^2 \tau^6$$
-so $|Du|=A\tau^3$, as claimed.  Solving for $\tau$ gives $\tau = A^{-1/3} |Du|^{1/3}$.  Again using (5) we get
-    $$Du_{ij} = A \left(A^{-1/3} |Du|^{1/3}\right)^2 \tau_{ij} = A^{1/3} |Du|^{2/3} \tau_{ij}.$$
-Solving for $\tau_{ij}$ gives the viscosity form
-    $$\tau_{ij} = A^{-1/3} |Du|^{-2/3} Du_{ij}.$$
-Comparing to ``$\tau_{ij} = 2 \nu\, Du_{ij}$'' gives the formula for $\nu$ stated just after (17).
-
-\prob{18}  As noted, equation (18) follows from dropping $\tau_{13,x}$ from equation (8), giving $(p+\tau_{11})_z = -\rho g$.  Integrating this we get
+\prob{17}  As noted, equation (16) follows from dropping $\tau_{13,x}$ from equation (8), giving $(p+\tau_{11})_z = -\rho g$.  Integrating this we get
     $$p+\tau_{11} = -\rho g z + C_0.$$
-We take the normal stress to have zero at the surface: $\sigma_{33} = 0$.  Equivalently $p+\tau_{11}=0$ at the surface because $p+\tau_{11} = p-\tau_{33} = -\sigma_{33}$.  Then $0=-\rho g h + C_0$ so finally $p + \tau_{11} = \rho g (h-z)$, which is equation (19).  Taking the $x$ derivative gives an expression for $p_x$, namely: $p_x = -\tau_{11,x} + \rho g h_x$.  Substituting this into (7) gives
+We take the normal stress to have zero at the surface: $\sigma_{33} = 0$.  Equivalently $p+\tau_{11}=0$ at the surface because $p+\tau_{11} = p-\tau_{33} = -\sigma_{33}$.  Then $0=-\rho g h + C_0$ so finally $p + \tau_{11} = \rho g (h-z)$, which is equation (17).  Taking the $x$ derivative gives an expression for $p_x$, namely: $p_x = -\tau_{11,x} + \rho g h_x$.  Substituting this into (7) gives
     $$-\tau_{11,x} + \rho g h_x = \tau_{11,x} + \tau_{13,z}$$
 or
     $$2 \tau_{11,x} + \tau_{13,z} = \rho g h_x.$$
 Now we use viscosity form (17) to get
     $$2 \left(2 \nu Du_{11}\right)_x + \left(2 \nu Du_{13}\right)_z = \rho g h_x.$$
-Recalling the formula for the strain rate tensor stated after (5), we have
+Recalling the defining formula for the strain rate tensor, we have
     $$\left(4 \nu u_x\right)_x + \left(\nu (u_z + w_x)\right)_z = \rho g h_x.$$
-Which is the hydrostatic stress balance equation (20).
+Which is the hydrostatic stress balance equation (18).
 
 \end{document}
 
