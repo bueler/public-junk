@@ -44,7 +44,7 @@
 
 \begin{document}
 \scriptsize
-\noindent June 2018 \hfill Ed Bueler
+\hfill Ed Bueler, May 2022
 
 \vspace{10mm}
 
@@ -52,7 +52,7 @@
 
 \medskip
 \small
-\centerline{\emph{These are not complete solutions to some notes available at a small town near the Root Glacier.}}
+\centerline{\emph{These are partial solutions to some notes available at a small town fairly near the Root Glacier.}}
 \normalsize
 
 \bigskip\bigskip
@@ -74,7 +74,7 @@ This shows the first result.  For the second we expand to one more term and do t
 \end{gather*}
 This shows the second result.
 
-\prob{2}  In problem \textbf{1} we had $x$ as base-point and we moved $\Delta$ to left and right.  Now we use $x+\Delta/2$ as base-point and move $\Delta/2$ to left and right:
+\prob{2}  In exercise \textbf{1} we had $x$ as base-point and we moved $\Delta$ to left and right.  Now we use $x+\Delta/2$ as base-point and move $\Delta/2$ to left and right:
 \begin{gather*}
 f(x) = f(x+\Delta/2) - \frac{1}{2} f'(x+\Delta/2) \Delta + \frac{1}{8} f''(x+\Delta/2) \Delta^2 - \frac{1}{48} f'''(x+\Delta/2) \Delta^3 + \dots \\
 f(x+\Delta) = f(x+\Delta/2) + \frac{1}{2} f'(x+\Delta/2) \Delta + \frac{1}{8} f''(x+\Delta/2) \Delta^2 + \frac{1}{48} f'''(x+\Delta/2) \Delta^3 + \dots
@@ -90,7 +90,7 @@ as desired.
 
 \mfile{heatwithloops.m}
 
-\prob{4}  If $\Delta t < 0$ then $\mu = D \Delta t / \Delta x^2 < 0$ also.  Then $T_j^{n+1} = \mu T_{j+1}^n + (1 - 2 \mu) T_j^n + \mu T_{j-1}^n$ writes $T_j^{n+1}$ as a linear combination of the three ``old'' values, but with the coefficients of $T_{j+1}^n$ and $T_{j-1}^n$ both negative.  Though the sum of coefficients is still one (i.e.~$\mu + (1-2\mu) + \mu = 1$), this is not an average for any $\Delta t < 0$.
+\prob{4}  If $\Delta t < 0$ then $\mu = D \Delta t / \Delta x^2 < 0$ also.  Then $T_j^{n+1} = \mu T_{j+1}^n + (1 - 2 \mu) T_j^n + \mu T_{j-1}^n$ writes $T_j^{n+1}$ as a linear combination of the three ``old'' values, but the coefficients of $T_{j+1}^n$ and $T_{j-1}^n$ are both negative.  Though the sum of coefficients is still one (i.e.~$\mu + (1-2\mu) + \mu = 1$), this is not an average for any $\Delta t < 0$.
 
 On the other hand, running
 \begin{verbatim}
@@ -102,9 +102,9 @@ which goes backward in time from $t=0$ to $t=-0.020$, produces an obviously nons
     $$T_j^{n+1} \stackrel{\ast}{=} T_j^n + \mu T_{j+1}^{n+1} - 2 \mu T_j^{n+1} + \mu T_{j-1}^{n+1}$$
 or
     $$T_j^{n+1} = \frac{1}{1 + 2\mu} T_j^n + \frac{\mu}{1 + 2\mu} T_{j+1}^{n+1} + \frac{\mu}{1 + 2\mu} T_{j-1}^{n+1}.$$
-In the last form we have written $T_j^{n+1}$ as an average of neighboring points.  That is, the coefficients are positive and add to one.  This allows a ``maximum principle'' proof of unconditional convergence, and thus unconditional stability; see reference [37] (= Morton \& Mayers).
+In the last form we have written $T_j^{n+1}$ as an average of neighboring points.  That is, the coefficients are positive and add to one.  This allows a ``maximum principle'' proof of unconditional convergence, and thus unconditional stability; see  Morton \& Mayers (2005).
 
-An alternative proof of unconditional stability uses a von Neumann-Fourier argument [37].  This argument examines the evolution of waves $e^{i\omega x}$ on the space-time grid:
+An alternative proof of unconditional stability uses a von Neumann-Fourier argument  (Morton \& Mayers, 2005).  This argument examines the evolution of waves $e^{i\omega x}$ on the space-time grid:
     $$T_j^n \stackrel{\dagger}{=} \lambda^n e^{i\omega (j\Delta x)}.$$
 We are interested in how the growth/decay rate $\lambda$ depends on the spatial frequency $\omega$.  Numerical stability is the statement ``all waves decay,'' that is, $|\lambda|<1$ for all $\omega$.  Unconditional numerical stability is when this occurs regardless of the values of $\Delta t$ and $\Delta x$, that is, regardless of the value of $\mu$.
 
@@ -146,7 +146,7 @@ That is, we could write the diffusion PDE with separate diffusion part ($D \grad
 \medskip
 \noindent (d)  If we expand ``$\Div \left(D \grad u\right)$'' as in (c) then the strength of the advection relates to the \emph{variability} in $D$, not its magnitude.  This is not a good idea!  That is because $D$ may be small but irregular, with large slopes---in fact it is exactly this way in the SIA context---and then the stability of our scheme is controlled by the steepness of $D$.  Having the time steps controlled by the magnitude of $D$ is o.k.~because it is this magnitude that sets the time scale for the physical process of diffusion.
 
-The explicit centered scheme used in the notes (see \texttt{diffusion.m}) does not require expanding the diffusion PDE into diffusion-advection form.  Instead we evaluate the diffusivity on the staggered grid, and thereby have a centered scheme allowing variability in $D$, but where the only stability restriction depends on the maximum magnitude of $D$ and not its variability.
+The explicit centered scheme used in the notes (see \texttt{diffstag.m}) does not require expanding the diffusion PDE into diffusion-advection form.  Instead we evaluate the diffusivity on the staggered grid, and thereby have a centered scheme allowing variability in $D$, but where the only stability restriction depends on the maximum magnitude of $D$ and not its variability.
 
 
 \prob{7}  Suppose $s = t^{-1/2} x$ and $T(t,x)=t^{-1/2} \phi(s)$.  By the chain rule we can write $T_t$ and $T_{xx}$ with a common power of $t$ and otherwise in terms of $s$:
@@ -183,9 +183,9 @@ by substitution $u=x/\sqrt{4D}$.  Thus $A = (4\pi D)^{-1/2}$ and $T(t,x) = (4\pi
 \mfile{verifyheat.m}
 
 
-\prob{10}  \emph{Though this problem only requires the ability to differentiate, it may be the hardest one in this exercise set!}  For polar coordinates, recall that if $f=f(r)$ then $\grad f = f_r \hat{\mathbf{r}}$, and if $\mathbf{X}=\alpha \hat{\mathbf{r}}$ then $\Div \mathbf{X} = \frac{1}{r} \left(r \alpha\right)_r$.
+\prob{9}  \emph{Though this problem only requires the ability to differentiate, it may be the hardest one in this set!}
 
-It helps to clean up the formula before differentiating.  Define new variables $\tau = t/t_0$ and $\rho = r/R_0$ so
+For polar coordinates, recall that if $f=f(r)$ then $\grad f = f_r \hat{\mathbf{r}}$, and if $\mathbf{X}=\alpha \hat{\mathbf{r}}$ then $\Div \mathbf{X} = \frac{1}{r} \left(r \alpha\right)_r$.  Next, clean up the formula before differentiating.  Define new variables $\tau = t/t_0$ and $\rho = r/R_0$ so
     $$H = H_0 \frac{1}{\tau^{1/9}} \left[1 - \left( \frac{\rho}{\tau^{1/18}} \right)^{4/3}\right]^{3/7}.$$
 Then equation (26) in the $n=3$ case is equivalent to
     $$\frac{1}{t_0} H_\tau = \frac{\Gamma}{R_0^4} \frac{1}{\rho} \left(\rho H^5 H_\rho^3\right)_\rho.$$
@@ -210,24 +210,26 @@ so, with some simplification,
 
 Comparing $H_\tau$ above to the last expression, this is starting to look good!  We have calculated the right-hand side of $\ast$.  The left side is
     $$18 H_0^7 \left(\frac{4}{7}\right)^3 H_\tau = - H_0^8 \left(\frac{4}{7}\right)^3 \tau^{-10/9} \left\{ 2 \left[1 - \left( \frac{\rho}{\tau^{1/18}} \right)^{4/3}\right]^{3/7} - \left(\frac{4}{7}\right) \frac{\rho^{4/3}}{\tau^{2/27}} \left[1 - \left( \frac{\rho}{\tau^{1/18}} \right)^{4/3}\right]^{-4/7} \right\}.$$
-This is the same as our expression for the right-hand side.  Thus the Halfar solution is indeed a solution to the SIA equation.\footnote{P.~Halfar did not find the solution this way.  One does not just guess such a formula and then check it.  Instead, he or she started with a similarity variable $s = t^\beta r$ and looked for an ODE which the ``self-similar shape'' $\phi(s)$ satisfied.  See exercise \textbf{7} for the heat equation version of such a calculation.  See also reference [10] = Bueler et al.~(2005).}
+This is the same as our expression for the right-hand side.  Thus the Halfar solution is indeed a solution to the SIA equation.\footnote{Peter Halfar did not find the solution this way.  One does not just guess such a formula and then check it.  Instead, he started with a similarity variable $s = t^\beta r$ and looked for an ODE which the ``self-similar shape'' $\phi(s)$ satisfied.  See exercise \textbf{7} for the heat equation version of such a calculation, and Bueler et al.~(2005) for SIA extensions.}
 
 
-\prob{11}  The time-dependent margin radius of the Halfar solution is $R(t) = R_0 (t/t_0)^{1/18}$, an expression which comes from setting $H(t,r)=0$ and solving.  The volume at time $t$ is found by integrating out to this radius.  Using polar coordinates and successive substitutions $s = (t/t_0)^{1/18}$ and then $u=r/(R_0 s)$ we have
+\prob{10}  The time-dependent margin radius of the Halfar solution is $R(t) = R_0 (t/t_0)^{1/18}$, an expression which comes from setting $H(t,r)=0$ and solving.  The volume at time $t$ is found by integrating out to this radius.  Using polar coordinates and successive substitutions $s = (t/t_0)^{1/18}$ and then $u=r/(R_0 s)$ we have
 \begin{align*}
 V(t) &= \int_0^{2\pi} \int_0^{R(t)} H(t,r) \,r\,dr\,d\theta \\
      &= 2\pi \int_0^{R_0 (t/t_0)^{1/18}} H_0 \left(\frac{t_0}{t}\right)^{1/9} \left[1 - \left(\left(\frac{t_0}{t}\right)^{1/18} \frac{r}{R_0}\right)^{4/3}\right]^{3/7} \,r\,dr \\
      &= 2\pi H_0 R_0^2 \int_0^1 \left(1 - u^{4/3}\right)^{3/7} \,u\,du.
 \end{align*}
-At this point we are done!  The last expression is not fully-computed yet,\footnote{The integral can be easily approximated numerically: $\int_0^1 (1 - u^{4/3})^{3/7} \,u\,du \approx 0.31422$.  Thus $V(t) = C H_0 R_0^2$ for a value $C\approx 2$ which can be computed accurately to many digits, if desired.} but it is independent of $t$.
+At this point we are done!  The last expression is not fully-computed yet,  but it is independent of $t$.
+
+The integral can be easily approximated numerically if desired: $\int_0^1 (1 - u^{4/3})^{3/7} \,u\,du \approx 0.31422$.  Thus $V(t) = C H_0 R_0^2$ for a value $C\approx 2$ which can be computed accurately to many digits.
 %>> quadl(@(u) u.*(1 - u.^(4/3)).^(3/7),0,1)
 %ans =  0.31422
 %>> quad(@(u) u.*(1 - u.^(4/3)).^(3/7),0,1)
 %ans =  0.31422
 
-\prob{13}  The numerical thickness error plot shows that all of the error is concentrated near the ice sheet margin.  This is because the margin is steep, that is, the gradient of thickness and surface elevation has unbounded magnitude at the margin.  In fact, merely interpolating the exact margin shape onto the grid introduces errors of the same magnitude as the numerical solution error, a claim easily tested using the Halfar solution; see [10] = Bueler et al.~(2005).  Furthermore, \emph{any} ice flow model (e.g.~SIA to Stokes) will produce an ice sheet shape with a steep margin, because the physics leads to such shapes.  Thus this character of the numerical thickness error is universal across models, and unavoidable.\footnote{Assuming the numerical method does not know the asymptotic shape of the margin, which is non-polynomial, and which is not smooth at the free boundary.  Thus any finite difference, finite element, finite volume, spectral, or hp-finite element model will produce thickness error of the same character and magnitude as the boring finite difference method shown here.}
+\prob{12}  The numerical thickness error plot shows that all of the error is concentrated near the ice sheet margin.  This is because the margin is steep, that is, the gradient of thickness and surface elevation has unbounded magnitude at the margin.  In fact, merely interpolating the exact margin shape onto the grid introduces errors of the same magnitude as the numerical solution error, a claim easily tested using the Halfar solution; see Bueler et al.~(2005).  Furthermore, \emph{any} ice flow model (e.g.~SIA to Stokes) will produce an ice sheet shape with a steep margin, because the physics leads to such shapes.  Thus this character of the numerical thickness error is universal across models, and unavoidable.\footnote{Assuming the numerical method does not know the asymptotic shape of the margin, which is non-polynomial, and which is not smooth at the free boundary.  Thus any finite difference, finite element, finite volume, spectral, or hp-finite element model will produce thickness error of the same character and magnitude as the boring finite difference method shown here.}
 
-\prob{14}  Let's start with the mass continuity equation (25), write the vertically-averaged velocity as an integral, and then use Leibniz's rule:
+\prob{13}  Let's start with the mass continuity equation (25), write the vertically-averaged velocity as an integral, and then use Leibniz's rule:
 \begin{align*}
 H_t &= M - \Div \left(\bar{\mathbf{U}} H \right) \\
     &= M - \Div \left(\int_b^h \mathbf{U}(t,x,y,z)\,dz\right) \\
@@ -242,11 +244,11 @@ We have used the mass continuity equation (25) and incompressibility (1).  Now u
   $$h_t - b_t = a - \grad h\cdot \mathbf{U}\big|_h + w\big|_h - b_t.$$
 Dropping $-b_t$ from both sides we get the surface kinematical equation (40), as desired.
 
-\prob{15}  We start this solution by writing both sides of (44) as derivatives:
+\prob{14}  We start this solution by writing both sides of (45) as derivatives:
     $$\left(2 \,\bar\nu\, H u_x\right)_x = \frac{1}{2} \rho g (1-r) (H^2)_x.$$
 Integrating this and recalling $\bar\nu = B |u_x|^{1/n - 1}$ gives
     $$2 B |u_x|^{1/n - 1}\, H u_x = \frac{1}{2} \rho g (1-r) H^2 + C_0$$
-for some constant $C_0$.  But (47) applies at the calving front $x=x_c$ so $C_0=0$.  Recalling $B=A^{-1/n}$, cancelling ``$H$'' and simplifying gives
+for some constant $C_0$.  But (48) applies at the calving front $x=x_c$ so $C_0=0$.  Recalling $B=A^{-1/n}$, cancelling ``$H$'' and simplifying gives
     $$|u_x|^{1/n - 1}\, u_x = \frac{\rho g (1-r) A^{1/n}}{4} H.$$
 Note $u_x>0$ for this solution.  We can therefore remove the absolute values, take the $n$th power, and use the defined constant $C_s$ to get
     $$u_x \stackrel{\ast}{=} C_s H^n.$$
@@ -263,7 +265,7 @@ Integrating from $x_g=0$ to $x$ gives
     $$\frac{u(x)^{n+1}-u_g^{n+1}}{n+1} = \frac{C_s}{M_0 (n+1)} \left((M_0 x + u_g H_g)^{n+1} - (u_g H_g)^{n+1}\right).$$
 Solving for $u(x)$ gives the velocity part of the van der Veen solution.  Solving $\dagger$ for $H(x)$ gives the thickness part of the van der Veen solution.
 
-\prob{17}  As noted, equation (16) follows from dropping $\tau_{13,x}$ from equation (8), giving $(p+\tau_{11})_z = -\rho g$.  Integrating this we get
+\prob{16}  As noted, equation (16) follows from dropping $\tau_{13,x}$ from equation (8), giving $(p+\tau_{11})_z = -\rho g$.  Integrating this we get
     $$p+\tau_{11} = -\rho g z + C_0.$$
 We take the normal stress to have zero at the surface: $\sigma_{33} = 0$.  Equivalently $p+\tau_{11}=0$ at the surface because $p+\tau_{11} = p-\tau_{33} = -\sigma_{33}$.  Then $0=-\rho g h + C_0$ so finally $p + \tau_{11} = \rho g (h-z)$, which is equation (17).  Taking the $x$ derivative gives an expression for $p_x$, namely: $p_x = -\tau_{11,x} + \rho g h_x$.  Substituting this into (7) gives
     $$-\tau_{11,x} + \rho g h_x = \tau_{11,x} + \tau_{13,z}$$
